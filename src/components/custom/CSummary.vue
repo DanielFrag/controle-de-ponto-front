@@ -2,9 +2,6 @@
   <div>
     <blockquote v-if="total">
       <small>
-        total: {{ total.hours }}h e {{total.minutes}}m
-      </small>
-      <small>
         média: {{ avg.hours }}h e {{avg.minutes}}m
       </small>
     </blockquote>

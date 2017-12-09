@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-list inset-separator v-for="d in data" :key="d.id">
-      <q-item @click="deleteConfirm(d.id)">
+      <q-item @click="deleteConfirm(d.id, d.date, d.time)">
         <q-item-main>
           <q-item-tile label>
             {{ d.time }}
@@ -63,10 +63,10 @@ export default {
         })
       })
     },
-    deleteConfirm (id) {
+    deleteConfirm (id, date, time) {
       Dialog.create({
         title: 'Confirmação',
-        message: 'Deseja realmente deletar o registro',
+        message: `Deseja realmente deletar o registro das ${time} de ${date}`,
         buttons: [
           {
             label: 'Cancelar',

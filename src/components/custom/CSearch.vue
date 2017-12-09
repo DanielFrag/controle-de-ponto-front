@@ -32,8 +32,8 @@ export default {
   data () {
     return {
       range: {
-        from: null,
-        to: null
+        from: new Date(),
+        to: new Date()
       }
     }
   },

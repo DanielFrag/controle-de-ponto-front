@@ -58,10 +58,15 @@ export default {
     }
   },
   methods: {
+    reset () {
+      this.date = new Date()
+      this.select = ''
+      this.obs = ''
+    },
     submitConfirm () {
       Dialog.create({
         title: 'Confirmação',
-        message: 'Deseja realmente enviar o registro',
+        message: `Deseja realmente enviar o registro ${this.date.toLocaleString()}`,
         buttons: [
           {
             label: 'Cancelar',
@@ -102,7 +107,9 @@ export default {
                     })
                   }
                 })
-                .finally(() => {})
+                .finally(() => {
+                  this.reset()
+                })
             }
           }
         ]

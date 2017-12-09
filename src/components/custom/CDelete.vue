@@ -56,9 +56,15 @@ export default {
             res.body.dateRegisters.sort((a, b) => {
               return new Date(a.timeStamp).getTime() - new Date(b.timeStamp).getTime()
             })
-            this.$store.commit('ADD_REGISTERS', res.body.dateRegisters)
-            Events.$emit('registers-stored')
           }
+          else {
+            res.body.dateRegisters = []
+            Toast.create.info({
+              html: 'Nenhum registro encontrado'
+            })
+          }
+          this.$store.commit('ADD_REGISTERS', res.body.dateRegisters)
+          Events.$emit('registers-stored')
         }, errorRes => {
           if (parseInt(errorRes.status / 100) === 4) {
             this.$router.replace('/')
