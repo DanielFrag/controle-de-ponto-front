@@ -3,14 +3,14 @@
     <form>
       <q-inline-datetime type="datetime" v-model="date" color="primary" format24h/>
       <q-select
-        stack-label="Descrição"
+        stack-label="Descrição (opcional)"
         inverted
         color="secondary"
         separator
         v-model="select"
         :options="options"
       />
-      <q-input type="textarea" v-model="obs" color="secondary" inverted :min-rows="5" :placeholder="'Observação'"/>
+      <q-input type="textarea" v-model="obs" color="secondary" inverted :min-rows="5" :placeholder="'Observação (opcional)'"/>
       <br/>
       <br/>
       <br/>

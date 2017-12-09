@@ -6,7 +6,7 @@
   >
     <q-toolbar slot="header" class="glossy">
       <q-toolbar-title class="justify-center">
-        Gestor de Ponto
+        Controle de Ponto
       </q-toolbar-title>
     </q-toolbar>
     <c-form></c-form>
