@@ -37,7 +37,7 @@ export default {
   methods: {
     submit () {
       if (!this.day) {
-        Toast.create['negative']({
+        Toast.create.negative({
           html: 'Data em branco'
         })
         return
@@ -64,7 +64,7 @@ export default {
             this.$router.replace('/')
           }
           else {
-            Toast.create['negative']({
+            Toast.create.negative({
               html: 'Erro ao consultar registros'
             })
           }

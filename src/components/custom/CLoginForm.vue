@@ -72,7 +72,7 @@ export default {
         }, errorRes => {
           done()
           this.reset()
-          Toast.create['negative']({
+          Toast.create.negative({
             html: this.pt.loginError
           })
         })

@@ -40,13 +40,15 @@ export default {
   methods: {
     submit () {
       if (!this.range.from || !this.range.to) {
-        Toast.create['negative']({
+        Toast.create.negative({
           html: 'Data em branco'
         })
         return
       }
       let startDate = new Date(this.range.from)
       let finishDate = new Date(this.range.to)
+      startDate.setHours(0)
+      startDate.setMinutes(0)
       finishDate.setHours(23)
       finishDate.setMinutes(59)
       this.$http
@@ -64,12 +66,17 @@ export default {
             this.$store.commit('ADD_REGISTERS', res.body.dateRegisters)
             Events.$emit('registers-stored')
           }
+          else {
+            Toast.create.info({
+              html: 'Nenhum registro encontrado'
+            })
+          }
         }, errorRes => {
           if (parseInt(errorRes.status / 100) === 4) {
             this.$router.replace('/')
           }
           else {
-            Toast.create['negative']({
+            Toast.create.negative({
               html: 'Erro ao consultar registros'
             })
           }

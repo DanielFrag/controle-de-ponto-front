@@ -50,6 +50,10 @@ export default new VueRouter({
       path: '/search',
       name: 'search',
       component: load('Search')
+    }, {
+      path: '/settings',
+      name: 'settings',
+      component: load('Settings')
     },
     // Always leave this last one
     {

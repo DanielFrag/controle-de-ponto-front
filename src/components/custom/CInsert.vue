@@ -1,8 +1,16 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <form>
-      <q-inline-datetime type="datetime" v-model="date" color="secondary"/>
-      <q-input type="textarea" v-model="description" color="secondary" inverted :min-rows="5" :placeholder="'Descrição'"/>
+      <q-inline-datetime type="datetime" v-model="date" color="primary" format24h/>
+      <q-select
+        stack-label="Descrição"
+        inverted
+        color="secondary"
+        separator
+        v-model="select"
+        :options="options"
+      />
+      <q-input type="textarea" v-model="obs" color="secondary" inverted :min-rows="5" :placeholder="'Observação'"/>
       <br/>
       <br/>
       <br/>
@@ -20,6 +28,7 @@ import {
   QIcon,
   QInlineDatetime,
   QInput,
+  QSelect,
   Toast
 } from 'quasar'
 export default {
@@ -28,12 +37,24 @@ export default {
     QBtn,
     QIcon,
     QInlineDatetime,
-    QInput
+    QInput,
+    QSelect
   },
   data () {
     return {
       date: new Date(),
-      description: ''
+      obs: '',
+      options: [{
+        label: '',
+        value: ''
+      }, {
+        label: 'Entrada',
+        value: 'Entrada'
+      }, {
+        label: 'Saída',
+        value: 'Saída'
+      }],
+      select: ''
     }
   },
   methods: {
@@ -48,10 +69,19 @@ export default {
           }, {
             label: 'Ok',
             handler: () => {
+              this.date.setSeconds(0)
+              this.date.setMilliseconds(0)
+              let description = ''
+              if (this.select) {
+                description = `${this.select}`
+              }
+              if (this.obs) {
+                description = `${description}: ${this.obs}`
+              }
               this.$http
                 .post(`${process.env.API}/user/register-date`, {
                   timeStamp: this.date,
-                  description: this.description
+                  description
                 }, {
                   headers: {
                     Authorization: 'bearer ' + this.$store.state.token
@@ -59,12 +89,15 @@ export default {
                 })
                 .then(res => {
                   this.$store.commit('SET_TOKEN', res.body.token)
+                  Toast.create.positive({
+                    html: 'Registro enviado'
+                  })
                 }, errorRes => {
                   if (parseInt(errorRes.status / 100) === 4) {
                     this.$router.replace('/')
                   }
                   else {
-                    Toast.create['negative']({
+                    Toast.create.negative({
                       html: 'Erro ao criar registro'
                     })
                   }

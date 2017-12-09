@@ -29,6 +29,9 @@
       <q-btn big color="secondary" class="full-width custom-btn" icon="delete" @click="navTo('delete')">
         Deletar Registro
       </q-btn>
+      <q-btn big color="secondary" class="full-width custom-btn" icon="settings" @click="navTo('settings')">
+        Configurações
+      </q-btn>
     </div>
     <q-toolbar inverted color="secondary" class="layout-padding row justify-center fixed" style="bottom: 18px">
       Olá {{ user }}!

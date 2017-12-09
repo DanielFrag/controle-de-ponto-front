@@ -91,7 +91,7 @@ export default {
                     this.$router.replace('/')
                   }
                   else {
-                    Toast.create['negative']({
+                    Toast.create.negative({
                       html: 'Erro ao deletar registro'
                     })
                   }
