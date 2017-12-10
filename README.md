@@ -1,6 +1,6 @@
 # Quasar App
 
-> A Quasar project
+Front-end of web app "Controle de Ponto", developed with quasar and vuejs
 
 ## Build Setup
 
@@ -17,3 +17,4 @@ $ quasar build
 # lint code
 $ quasar lint
 ```
+
