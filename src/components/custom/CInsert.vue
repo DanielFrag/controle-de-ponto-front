@@ -1,23 +1,29 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
-    <form @submit.prevent="clickOnSubmitButton">
-      <q-inline-datetime type="datetime" v-model="date" color="primary" format24h/>
-      <q-select
-        stack-label="Descrição (opcional)"
-        inverted
-        color="secondary"
-        separator
-        v-model="select"
-        :options="options"
-      />
-      <q-input type="textarea" v-model="obs" color="secondary" inverted :min-rows="5" :placeholder="'Observação (opcional)'"/>
+    <div class="custom-input">
+      <div class="row justify-center custom-input">
+        <q-inline-datetime type="datetime" v-model="date" color="primary" format24h/>
+      </div>
+      <div class="custom-input">
+        <q-select
+          stack-label="Descrição (opcional)"
+          inverted
+          color="secondary"
+          separator
+          v-model="select"
+          :options="options"
+        />
+      </div>
+      <div class="custom-input">
+        <q-input type="textarea" v-model="obs" color="secondary" inverted :min-rows="5" :placeholder="'Observação (opcional)'"/>
+      </div>
       <br/>
       <br/>
       <br/>
       <q-btn round ref="submitButton" @click="submitConfirm" class="fixed" style="right: 18px; bottom: 18px" color="primary" glossy>
         <q-icon name="add"/>
       </q-btn>
-    </form>
+    </div>
   </div>
 </template>
 
@@ -67,6 +73,8 @@ export default {
       this.obs = ''
     },
     submitConfirm () {
+      this.date.setSeconds(0)
+      this.date.setMilliseconds(0)
       Dialog.create({
         title: 'Confirmação',
         message: `Deseja realmente enviar o registro ${this.date.toLocaleString()}`,
@@ -77,8 +85,6 @@ export default {
           }, {
             label: 'Ok',
             handler: () => {
-              this.date.setSeconds(0)
-              this.date.setMilliseconds(0)
               let description = ''
               if (this.select) {
                 description = `${this.select}`
@@ -121,3 +127,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.custom-input {
+  width: 500px;
+  max-width: 90vw;
+}
+</style>

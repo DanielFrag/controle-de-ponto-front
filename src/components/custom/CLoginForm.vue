@@ -1,14 +1,12 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div class="custom-input">
-      <form @submit.prevent="clickOnSubmitButton">
-        <q-input type="text" v-model="login" :placeholder="pt.placeholder.login"/>
-        <q-input type="password" v-model="password" :placeholder="pt.placeholder.password"/>
-        <q-btn loader big color="primary" ref="submitButton" @click="ajaxSubmit">
-          Enviar
-          <span slot="loading">Enviando...</span>
-        </q-btn>
-      </form>
+      <q-input type="text" v-model="login" @keyup.enter="clickOnSubmitButton" :placeholder="pt.placeholder.login"/>
+      <q-input type="password" v-model="password" @keyup.enter="clickOnSubmitButton" :placeholder="pt.placeholder.password"/>
+      <q-btn loader big color="primary" ref="submitButton" @click="ajaxSubmit">
+        Enviar
+        <span slot="loading">Enviando...</span>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -44,6 +42,7 @@ export default {
   },
   data () {
     return {
+      buttonState: false,
       pt: {
         placeholder: {
           login: 'Login',
@@ -60,6 +59,7 @@ export default {
       this.$refs.submitButton.click()
     },
     ajaxSubmit (e, done) {
+      this.buttonState = true
       this.$http
         .post(`${process.env.API}/login`, {
           login: this.login,
@@ -67,12 +67,14 @@ export default {
         })
         .then(res => {
           done()
+          this.buttonState = false
           this.$store.commit('SET_TOKEN', res.body.token)
           this.$store.commit('SET_USER', res.body.login)
           this.$router.push({
             name: 'menu'
           })
         }, errorRes => {
+          this.buttonState = false
           done()
           this.reset()
           Toast.create.negative({

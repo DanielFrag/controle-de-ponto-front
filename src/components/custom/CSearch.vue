@@ -1,13 +1,12 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div style="width: 500px; max-width: 90vw;">
-      <form @submit.prevent="clickOnSubmitButton">
-        <p class="caption">Selecione os Dias</p>
-        <q-datetime-range color="secondary" v-model="range" class="full-width"/>
-        <q-btn ref="submitButton" big @click="submit" class="full-width custom-btn" color="primary">
-          Enviar Consulta
-        </q-btn>
-      </form>
+      <p class="caption">Selecione os Dias</p>
+      <q-datetime-range color="secondary" v-model="range" class="full-width"/>
+      <q-btn ref="submitButton" big @click="submit" class="full-width custom-btn" color="primary">
+        Enviar Consulta
+        <span slot="loading">Buscando...</span>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -41,7 +40,7 @@ export default {
     clickOnSubmitButton () {
       this.$refs.submitButton.click()
     },
-    submit () {
+    submit (e, done) {
       if (!this.range.from || !this.range.to) {
         Toast.create.negative({
           html: 'Data em branco'
@@ -66,14 +65,14 @@ export default {
             res.body.dateRegisters.sort((a, b) => {
               return new Date(a.timeStamp).getTime() - new Date(b.timeStamp).getTime()
             })
-            this.$store.commit('ADD_REGISTERS', res.body.dateRegisters)
-            Events.$emit('registers-stored')
           }
           else {
             Toast.create.info({
               html: 'Nenhum registro encontrado'
             })
           }
+          this.$store.commit('ADD_REGISTERS', res.body.dateRegisters || [])
+          Events.$emit('registers-stored')
         }, errorRes => {
           if (parseInt(errorRes.status / 100) === 4) {
             this.$router.replace('/')
@@ -84,7 +83,9 @@ export default {
             })
           }
         })
-        .finally(() => {})
+        .finally(() => {
+          done()
+        })
     }
   }
 }

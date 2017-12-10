@@ -50,6 +50,10 @@ export default {
   methods: {
     populateView () {
       this.days = {}
+      if (!this.registers.length) {
+        this.total = 0
+        return
+      }
       this.total = {
         acc: 0,
         hours: 0,

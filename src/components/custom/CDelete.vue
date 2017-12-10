@@ -1,13 +1,12 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div style="width: 500px; max-width: 90vw;">
-      <form @submit.prevent="clickOnSubmitButton">
-        <p class="caption">Selecione o Dia</p>
-        <q-datetime color="secondary" v-model="day" class="full-width"/>
-        <q-btn big @click="submit" ref="submitButton" class="full-width custom-btn" color="primary">
-          Buscar Registros
-        </q-btn>
-      </form>
+      <p class="caption">Selecione o Dia</p>
+      <q-datetime color="secondary" v-model="day" class="full-width"/>
+      <q-btn loader big @click="submit" ref="submitButton" class="full-width custom-btn" color="primary">
+        Buscar Registros
+        <span slot="loading">Buscando...</span>
+      </q-btn>
     </div>
   </div>
 </template>
@@ -38,7 +37,7 @@ export default {
     clickOnSubmitButton () {
       this.$refs.submitButton.click()
     },
-    submit () {
+    submit (e, done) {
       if (!this.day) {
         Toast.create.negative({
           html: 'Data em branco'
@@ -61,12 +60,11 @@ export default {
             })
           }
           else {
-            res.body.dateRegisters = []
             Toast.create.info({
               html: 'Nenhum registro encontrado'
             })
           }
-          this.$store.commit('ADD_REGISTERS', res.body.dateRegisters)
+          this.$store.commit('ADD_REGISTERS', res.body.dateRegisters || [])
           Events.$emit('registers-stored')
         }, errorRes => {
           if (parseInt(errorRes.status / 100) === 4) {
@@ -78,7 +76,9 @@ export default {
             })
           }
         })
-        .finally(() => {})
+        .finally(() => {
+          done()
+        })
     }
   }
 }

@@ -2,14 +2,12 @@
   <div class="layout-padding docs-input row justify-center">
     <q-list class="settings-list">
       <q-collapsible group="settings" label="Mudar senha">
-        <form @submit.prevent="clickOnSubmitButton">
-          <q-input type="password" v-model="oldPass" placeholder="Senha atual"/>
-          <q-input type="password" v-model="newPass" placeholder="Nova senha"/>
-          <q-btn loader ref="submitButton" big color="primary" @click="submitConfirm">
-            Enviar
-            <span slot="loading">Enviando...</span>
-          </q-btn>
-        </form>
+        <q-input type="password" @keyup.enter="clickOnSubmitButton" v-model="oldPass" placeholder="Senha atual"/>
+        <q-input type="password" @keyup.enter="clickOnSubmitButton" v-model="newPass" placeholder="Nova senha"/>
+        <q-btn loader ref="submitButton" big color="primary" @click="submitConfirm">
+          Enviar
+          <span slot="loading">Enviando...</span>
+        </q-btn>
       </q-collapsible>
     </q-list>
   </div>
