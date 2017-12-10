@@ -1,6 +1,6 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
-    <form>
+    <form @submit.prevent="clickOnSubmitButton">
       <q-inline-datetime type="datetime" v-model="date" color="primary" format24h/>
       <q-select
         stack-label="Descrição (opcional)"
@@ -14,7 +14,7 @@
       <br/>
       <br/>
       <br/>
-      <q-btn round @click="submitConfirm" class="fixed" style="right: 18px; bottom: 18px" color="primary" glossy>
+      <q-btn round ref="submitButton" @click="submitConfirm" class="fixed" style="right: 18px; bottom: 18px" color="primary" glossy>
         <q-icon name="add"/>
       </q-btn>
     </form>
@@ -58,6 +58,9 @@ export default {
     }
   },
   methods: {
+    clickOnSubmitButton () {
+      this.$refs.submitButton.click()
+    },
     reset () {
       this.date = new Date()
       this.select = ''

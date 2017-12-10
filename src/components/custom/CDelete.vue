@@ -1,10 +1,10 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div style="width: 500px; max-width: 90vw;">
-      <form>
+      <form @submit.prevent="clickOnSubmitButton">
         <p class="caption">Selecione o Dia</p>
         <q-datetime color="secondary" v-model="day" class="full-width"/>
-        <q-btn big @click="submit" class="full-width custom-btn" color="primary">
+        <q-btn big @click="submit" ref="submitButton" class="full-width custom-btn" color="primary">
           Buscar Registros
         </q-btn>
       </form>
@@ -35,6 +35,9 @@ export default {
     }
   },
   methods: {
+    clickOnSubmitButton () {
+      this.$refs.submitButton.click()
+    },
     submit () {
       if (!this.day) {
         Toast.create.negative({

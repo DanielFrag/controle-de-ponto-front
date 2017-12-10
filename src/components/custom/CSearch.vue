@@ -1,10 +1,10 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div style="width: 500px; max-width: 90vw;">
-      <form>
+      <form @submit.prevent="clickOnSubmitButton">
         <p class="caption">Selecione os Dias</p>
         <q-datetime-range color="secondary" v-model="range" class="full-width"/>
-        <q-btn big @click="submit" class="full-width custom-btn" color="primary">
+        <q-btn ref="submitButton" big @click="submit" class="full-width custom-btn" color="primary">
           Enviar Consulta
         </q-btn>
       </form>
@@ -38,6 +38,9 @@ export default {
     }
   },
   methods: {
+    clickOnSubmitButton () {
+      this.$refs.submitButton.click()
+    },
     submit () {
       if (!this.range.from || !this.range.to) {
         Toast.create.negative({

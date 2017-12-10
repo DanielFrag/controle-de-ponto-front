@@ -1,12 +1,14 @@
 <template>
   <div class="layout-padding docs-input row justify-center">
     <div class="custom-input">
-      <q-input type="text" v-model="login" @keyup.enter="clickOnSubmit" :placeholder="pt.placeholder.login"/>
-      <q-input type="password" v-model="password" @keyup.enter="clickOnSubmit" :placeholder="pt.placeholder.password"/>
-      <q-btn loader big color="primary" ref="submitButton" @click="ajaxSubmit">
-        Enviar
-        <span slot="loading">Enviando...</span>
-      </q-btn>
+      <form @submit.prevent="clickOnSubmitButton">
+        <q-input type="text" v-model="login" :placeholder="pt.placeholder.login"/>
+        <q-input type="password" v-model="password" :placeholder="pt.placeholder.password"/>
+        <q-btn loader big color="primary" ref="submitButton" @click="ajaxSubmit">
+          Enviar
+          <span slot="loading">Enviando...</span>
+        </q-btn>
+      </form>
     </div>
   </div>
 </template>
@@ -54,7 +56,7 @@ export default {
     }
   },
   methods: {
-    clickOnSubmit () {
+    clickOnSubmitButton () {
       this.$refs.submitButton.click()
     },
     ajaxSubmit (e, done) {

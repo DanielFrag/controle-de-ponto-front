@@ -2,10 +2,10 @@
   <div class="layout-padding docs-input row justify-center">
     <q-list class="settings-list">
       <q-collapsible group="settings" label="Mudar senha">
-        <form>
+        <form @submit.prevent="clickOnSubmitButton">
           <q-input type="password" v-model="oldPass" placeholder="Senha atual"/>
           <q-input type="password" v-model="newPass" placeholder="Nova senha"/>
-          <q-btn loader big color="primary" @click="submitConfirm">
+          <q-btn loader ref="submitButton" big color="primary" @click="submitConfirm">
             Enviar
             <span slot="loading">Enviando...</span>
           </q-btn>
@@ -39,6 +39,9 @@ export default {
     }
   },
   methods: {
+    clickOnSubmitButton () {
+      this.$refs.submitButton.click()
+    },
     submitConfirm (e, done) {
       Dialog.create({
         title: 'Confirmação',

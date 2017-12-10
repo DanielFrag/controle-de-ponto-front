@@ -55,8 +55,9 @@ export default {
       this.data = []
       this.registers.forEach(r => {
         const date = new Date(r.timeStamp)
+        date.setSeconds(0)
         this.data.push({
-          date: date.setSeconds(0).toLocaleDateString(),
+          date: date.toLocaleDateString(),
           time: date.toLocaleTimeString(),
           description: r.description,
           id: r._id
